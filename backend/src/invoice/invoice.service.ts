@@ -6,7 +6,6 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateInvoiceDto } from './dto/create-invoice.dto';
 import { UpdateInvoiceDto } from './dto/update-invoice.dto';
-
 @Injectable()
 export class InvoiceService {
   constructor(private prisma: PrismaService) {}
@@ -102,6 +101,43 @@ export class InvoiceService {
       );
     } catch (error) {
       this.handlePrismaError(error, 'Error deleting invoice');
+    }
+  }
+
+  async findFilteredInvoices(
+    startDate?: Date,
+    endDate?: Date,
+    paymentStatus?: string,
+  ) {
+    try {
+      console.log('Filtering with:', { startDate, endDate, paymentStatus }); // Debug
+
+      const filters: any = {};
+
+      if (startDate) {
+        filters.dateCreated = { gte: startDate };
+      }
+
+      if (endDate) {
+        filters.dateCreated = { ...filters.dateCreated, lte: endDate };
+      }
+
+      if (paymentStatus) {
+        filters.paymentStatus = paymentStatus;
+      }
+
+      const invoices = await this.prisma.invoice.findMany({
+        where: filters,
+        include: { files: true },
+      });
+
+      return this.createSuccessResponse(
+        'Filtered invoices retrieved successfully',
+        invoices,
+      );
+    } catch (error) {
+      console.error('Error:', error); // Debug
+      this.handlePrismaError(error, 'Error retrieving filtered invoices');
     }
   }
 
