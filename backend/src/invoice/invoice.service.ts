@@ -31,7 +31,7 @@ export class InvoiceService {
         invoice,
       );
     } catch (error) {
-      this.handlePrismaError(error, 'Error creating invoice');
+      this.handlePrismaError(error, 'Error creating invoice:');
     }
   }
 
@@ -110,8 +110,6 @@ export class InvoiceService {
     paymentStatus?: string,
   ) {
     try {
-      console.log('Filtering with:', { startDate, endDate, paymentStatus }); // Debug
-
       const filters: any = {};
 
       if (startDate) {
