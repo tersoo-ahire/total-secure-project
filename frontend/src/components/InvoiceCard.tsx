@@ -141,7 +141,7 @@ const InvoiceCard = ({
             Customer Name:{" "}
             <span className="font-normal text-gray-600">{customerName}</span>
           </p>
-          <p className="text-base font-bold">
+          {/* <p className="text-base font-bold">
             Files:{" "}
             {files.map((file, index) => (
               <span
@@ -152,7 +152,7 @@ const InvoiceCard = ({
                 {index < files.length - 1 && ", "}
               </span>
             ))}
-          </p>
+          </p> */}
         </div>
       </div>
       <div className="flex flex-row items-center justify-between w-full gap-2">

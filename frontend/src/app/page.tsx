@@ -16,6 +16,7 @@ import { BsFileEarmarkPlusFill, BsFilter } from "react-icons/bs";
 import InvoiceCard from "@/components/InvoiceCard";
 import { ToastAction } from "@/components/ui/toast";
 import { FaXmark } from "react-icons/fa6";
+import FileUpload from "@/components/FileUpload";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const fetcher = (url: string) => axios.get(url).then((res) => res.data.data);
@@ -147,6 +148,13 @@ export default function Home() {
     setFilterState((prevState) => ({
       ...prevState,
       [name]: value,
+    }));
+  };
+
+  const handleFileUpload = (file: { fileName: string; filePath: string }) => {
+    setFormState((prevState: any) => ({
+      ...prevState,
+      files: [...prevState.files, file],
     }));
   };
 
@@ -311,6 +319,7 @@ export default function Home() {
                       <option value="unpaid">Unpaid</option>
                     </select>
                   </div>
+                  {/* <FileUpload onFileUpload={handleFileUpload} /> */}
                 </div>
                 {/* Optionally, add a file input for uploading files */}
                 <div className="mt-4">
@@ -404,7 +413,7 @@ export default function Home() {
             >
               Remove Filter
               <span className="text-base mb-[0.2em]">
-              <FaXmark />
+                <FaXmark />
               </span>
             </button>
           ) : null}
